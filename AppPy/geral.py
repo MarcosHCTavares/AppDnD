@@ -1,14 +1,16 @@
 import random
 import math
 ''
-d2 = random.randint(1, 2)
-d4 = random.randint(1, 4)
-d6 = random.randint(1, 6)
-d8 = random.randint(1, 8)
-d10 = random.randint(1, 10)
-d12 = random.randint(1, 12)
-d20 = random.randint(1, 20)
-d100 = random.randint(1, 100)
+while True:
+    dado = int(input('Escolha quantos lados tem o dado: '))
+    result = random.randint(1, dado)
+    print(f'O dado de {dado} lados caiu em {result}')
+    r = ' '
+    while r not in 'SN':
+        r = str(input('Quer rolar novamente? [S/N] ')).strip().upper()[0]
+    if r == 'N':
+        print('Obrigado por jogar conosco')
+        break
 ''
 nome = input('Nome')
 idade = input('Idade')
@@ -162,62 +164,62 @@ if classe == 'Barbáro':
     if nivel == 1:
         vida = 12 + modcon
     else:
-        vida = (d12 + modcon) * nivel
+        vida = (random.randint(1, 12) + modcon) * nivel
 elif classe == 'Bardo':
     if nivel == 1:
         vida = 8 + modcon
     else:
-        vida = (d8 + modcon) * nivel
+        vida = (random.randint(1, 8) + modcon) * nivel
 elif classe == 'Bruxo':
     if nivel == 1:
         vida = 8 + modcon
     else:
-        vida = (d8 + modcon) * nivel
+        vida = (random.randint(1, 8) + modcon) * nivel
 elif classe == 'Clérigo':
     if nivel == 1:
         vida = 8 + modcon
     else:
-        vida = (d8 + modcon) * nivel
+        vida = (random.randint(1, 8) + modcon) * nivel
 elif classe == 'Druida':
     if nivel == 1:
         vida = 8 + modcon
     else:
-        vida = (d8 + modcon) * nivel
+        vida = (random.randint(1, 8) + modcon) * nivel
 elif classe == 'Feiticeiro':
     if nivel == 1:
         vida = 6 + modcon
     else:
-        vida = (d6 + modcon) * nivel
+        vida = (random.randint(1, 6) + modcon) * nivel
 elif classe == 'Guerreiro':
     if nivel == 1:
         vida = 10 + modcon
     else:
-        vida = (d10 + modcon) * nivel
+        vida = (random.randint(1, 10) + modcon) * nivel
 elif classe == 'Ladino':
     if nivel == 1:
         vida = 8 + modcon
     else:
-        vida = (d8 + modcon) * nivel
+        vida = (random.randint(1, 8) + modcon) * nivel
 elif classe == 'Mago':
     if nivel == 1:
         vida = 6 + modcon
     else:
-        vida = (d6 + modcon) * nivel
+        vida = (random.randint(1, 6) + modcon) * nivel
 elif classe == 'Monge':
     if nivel == 1:
         vida = 8 + modcon
     else:
-        vida = (d8 + modcon) * nivel
+        vida = (random.randint(1, 8) + modcon) * nivel
 elif classe == 'Paladino':
     if nivel == 1:
         vida = 10 + modcon
     else:
-        vida = (d10 + modcon) * nivel
+        vida = (random.randint(1, 10) + modcon) * nivel
 elif classe == 'Patrulheiro':
     if nivel == 1:
         vida = 10 + modcon
     else:
-        vida = (d10 + modcon) * nivel
+        vida = (random.randint(1, 10) + modcon) * nivel
 ''
 print('\nNome: {}            Idade: {}            Peso: {}           Nome do jogador: {}'
       .format(nome, idade, peso, player))
