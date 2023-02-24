@@ -47,46 +47,16 @@ print('Int {} - {}\nSab {} - {}\nCar {} - {}'
 print('\nClasse de Armadura {}'.format(math.floor(ca)))
 ''
 nivel = int(input('Nível'))
-if nivel == 1:
-    bonus = 2
-elif nivel == 2:
-    bonus = 2
-elif nivel == 3:
-    bonus = 2
-elif nivel == 4:
-    bonus = 2
-elif nivel == 5:
-    bonus = 3
-elif nivel == 6:
-    bonus = 3
-elif nivel == 7:
-    bonus = 3
-elif nivel == 8:
-    bonus = 3
-elif nivel == 9:
-    bonus = 4
-elif nivel == 10:
-    bonus = 4
-elif nivel == 11:
-    bonus = 4
-elif nivel == 12:
-    bonus = 4
-elif nivel == 13:
-    bonus = 5
-elif nivel == 14:
-    bonus = 5
-elif nivel == 15:
-    bonus = 5
-elif nivel == 16:
-    bonus = 5
-elif nivel == 17:
-    bonus = 6
-elif nivel == 18:
-    bonus = 6
-elif nivel == 19:
-    bonus = 6
-elif nivel == 20:
-    bonus = 6
+if nivel <= 4 :
+    bp = 2
+elif nivel <= 8:
+    bp = 3
+elif nivel <= 12:
+    bp = 4
+elif nivel <= 16:
+    bp = 5
+elif nivel <= 20:
+    bp = 6
 ''
 if raca == 'Anão':
     visaoescuro = int(18)
