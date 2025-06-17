@@ -111,7 +111,7 @@ def criar_personagem():
         if nivel == 1:
             vida = dado_vida + modificadores["const"]
         else:
-            vida = (sum(random.randint(1, dado_vida) for _ in range(nivel)) + (modificadores["const"] * nivel)
+            vida = sum(random.randint(1, dado_vida) for _ in range(nivel)) + (modificadores["const"] * nivel)
     else:
         vida = 0  # Classe não reconhecida
 
