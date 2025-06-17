@@ -1,12 +1,18 @@
-nivel = int(input('Nível '))
-if nivel <= 4 :
+nivel = int(input('Nível: '))
+
+if 1 <= nivel <= 4:
     bp = 2
-elif nivel <= 8:
+elif 5 <= nivel <= 8:
     bp = 3
-elif nivel <= 12:
+elif 9 <= nivel <= 12:
     bp = 4
-elif nivel <= 16:
+elif 13 <= nivel <= 16:
     bp = 5
-elif nivel <= 20:
+elif 17 <= nivel <= 20:
     bp = 6
-print(bp)
+else:
+    print('Nível inválido. Insira um nível entre 1 e 20.')
+    bp = None
+
+if bp is not None:
+    print(f'Bônus de Proficiência: {bp}')
