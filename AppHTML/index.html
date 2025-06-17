@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha de RPG - Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Ficha de Personagem - RPG</h1>
+
+        <div class="form-group">
+            <label>Nome:</label>
+            <input type="text" id="nome">
+        </div>
+
+        <div class="form-group">
+            <label>Raça:</label>
+            <select id="raca" onchange="atualizarSubracas()">
+                <option>Humano</option>
+                <option>Elfo</option>
+                <option>Anão</option>
+                <option>Meio-Orc</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Sub-raça:</label>
+            <select id="subraca">
+                <option>Comum</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Classe:</label>
+            <select id="classe">
+                <option>Guerreiro</option>
+                <option>Mago</option>
+                <option>Ladino</option>
+                <option>Clérigo</option>
+            </select>
+        </div>
+
+        <h2>Atributos</h2>
+        <div id="atributos" class="atributos">
+            <!-- Atributos serão inseridos pelo JS -->
+        </div>
+
+        <button onclick="gerarFicha()">Gerar Ficha</button>
+
+        <div id="resultado" class="resultado"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
