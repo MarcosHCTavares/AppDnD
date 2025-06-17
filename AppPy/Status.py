@@ -1,22 +1,33 @@
-from math import floor
-forca = int(input('Força '))
-dex = int(input('Destreza '))
-const = int(input('Constituição '))
-inte = int(input('Inteligência '))
-sab = int(input('Sabedoria '))
-car = int(input('Carisma '))
-''
-modfor = (forca-10)/2
-moddex = (dex-10)/2
-modcon = (const-10)/2
-modinte = (inte-10)/2
-modsab = (sab-10)/2
-modcar = (car-10)/2
-''
-ca = 10+moddex
-''
-print('\nFor {} - {}\nDex {} - {}\nConst {} - {}'
-      .format(forca, floor(modfor), dex, floor(moddex), const, floor(modcon)))
-print('Int {} - {}\nSab {} - {}\nCar {} - {}'
-      .format(inte, floor(modinte), sab, floor(modsab), car, floor(modcar)))
-print('\nClasse de Armadura {}'.format(floor(ca)))
+atributos = {
+    'Força': 0,
+    'Destreza': 0,
+    'Constituição': 0,
+    'Inteligência': 0,
+    'Sabedoria': 0,
+    'Carisma': 0
+}
+
+# Coleta os valores de forma dinâmica
+for atributo in atributos:
+    while True:
+        try:
+            atributos[atributo] = int(input(f"{atributo}: "))
+            break
+        except ValueError:
+            print("Digite um número válido!")
+
+# Calcula modificadores (arredondamento para baixo)
+modificadores = {
+    nome: (valor - 10) // 2
+    for nome, valor in atributos.items()
+}
+
+# Classe de Armadura (CA)
+ca = 10 + modificadores['Destreza']
+
+# Exibe resultados
+print("\nAtributos e Modificadores:")
+for nome, valor in atributos.items():
+    print(f"{nome[:4]} {valor} - {modificadores[nome]}")
+
+print(f"\nClasse de Armadura: {ca}")
