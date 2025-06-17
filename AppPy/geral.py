@@ -1,199 +1,135 @@
 import random
 import math
-''
-while True:
-    dado = int(input('Escolha quantos lados tem o dado: '))
-    result = random.randint(1, dado)
-    print(f'O dado de {dado} lados caiu em {result}')
-    r = ' '
-    while r not in 'SN':
-        r = str(input('Quer rolar novamente? [S/N] ')).strip().upper()[0]
-    if r == 'N':
-        print('Obrigado por jogar conosco')
-        break
-''
-nome = input('Nome')
-idade = input('Idade')
-peso = input('Peso')
-player = input('Nome do jogador')
-tendencia = input('Tendencia')
-raca = str(input('Raça: '))
-olhos = input('Olhos')
-altura = input('Altura')
-pele = input('Pele')
-cabelo = input('Cabelo')
-''
-forca = int(input('Força '))
-dex = int(input('Destreza '))
-const = int(input('Constituição '))
-inte = int(input('Inteligência '))
-sab = int(input('Sabedoria '))
-car = int(input('Carisma '))
-vida = 0
-''
-modfor = (forca-10)/2
-moddex = (dex-10)/2
-modcon = (const-10)/2
-modinte = (inte-10)/2
-modsab = (sab-10)/2
-modcar = (car-10)/2
-''
-ca = 10+moddex
-''
-print('\nFor {} - {}\nDex {} - {}\nConst {} - {}'
-      .format(forca, math.floor(modfor), dex, math.floor(moddex), const, math.floor(modcon)))
-print('Int {} - {}\nSab {} - {}\nCar {} - {}'
-      .format(inte, math.floor(modinte), sab, math.floor(modsab), car, math.floor(modcar)))
-print('\nClasse de Armadura {}'.format(math.floor(ca)))
-''
-nivel = int(input('Nível'))
-if nivel <= 4 :
-    bp = 2
-elif nivel <= 8:
-    bp = 3
-elif nivel <= 12:
-    bp = 4
-elif nivel <= 16:
-    bp = 5
-elif nivel <= 20:
-    bp = 6
-''
-if raca == 'Anão':
-    visaoescuro = int(18)
-    deslocamento = float(7.5)
-    const = const + 2
-elif raca == 'Anão da Montanha':
-    visaoescuro = int(18)
-    deslocamento = float(7.5)
-    forca = forca + 2
-elif raca == 'Anão da Colina':
-    visaoescuro = int(18)
-    deslocamento = float(7.5)
-    sab = sab + 1
-elif raca == 'Elfo':
-    visaoescuro = int(18)
-    deslocamento = float(9)
-    dex = dex + 2
-elif raca == 'Alto Elfo':
-    visaoescuro = int(18)
-    deslocamento = float(9)
-    inte = inte + 1
-elif raca == 'Elfo da Floresta':
-    visaoescuro = int(18)
-    deslocamento = float(9)
-    sab = sab + 1
-elif raca == 'Elfo Negro':
-    visaoescuro = int(18)
-    deslocamento = float(9)
-    car = car + 1
-elif raca == 'Halfling':
-    deslocamento = float(9)
-    dex = dex + 2
-elif raca == 'Halfling Pés Leves':
-    deslocamento = float(9)
-    car = car + 1
-elif raca == 'Halfling Robusto':
-    deslocamento = float(9)
-    const = const + 1
-elif raca == 'Humano':
-    deslocamento = float(9)
-    forca = forca + 1
-    dex = dex + 1
-    const = const + 1
-    inte = inte + 1
-    sab = sab + 1
-    car = car + 1
-elif raca == 'Draconato':
-    deslocamento = float(9)
-    forca = forca + 2
-    car = car + 1
-elif raca == 'Gnomo':
-    deslocamento = float(9)
-    inte = inte + 2
-elif raca == 'Gnomo da Floresta':
-    deslocamento = float(9)
-    dex = dex + 1
-elif raca == 'Gnomo das Rochas':
-    deslocamento = float(9)
-    const = const + 1
-elif raca == 'Meio-Elfo':
-    visaoescuro = int(18)
-    deslocamento = float(9)
-    car = car + 2
-elif raca == 'Meio-Orc':
-    deslocamento = float(9)
-    forca = forca + 2
-elif raca == 'Tiefling':
-    visaoescuro = int(18)
-    deslocamento = float(9)
-    inte = inte + 1
-    car = car + 2
-''
-classe = str(input('Classe: ')).upper().strip()
-if classe == 'BARBARO':
-    if nivel == 1:
-        vida = 12 + modcon
+
+# --- Funções Reutilizáveis ---
+def rolar_dado():
+    while True:
+        try:
+            lados = int(input("Escolha quantos lados tem o dado: "))
+            resultado = random.randint(1, lados)
+            print(f"O dado de {lados} lados caiu em {resultado}")
+            
+            while True:
+                repetir = input("Quer rolar novamente? [S/N] ").strip().upper()
+                if repetir in ("S", "N"):
+                    break
+                print("Digite 'S' ou 'N'.")
+            
+            if repetir == "N":
+                print("Obrigado por jogar conosco!")
+                return
+        
+        except ValueError:
+            print("Digite um número válido!")
+
+def calcular_modificador(atributo):
+    return (atributo - 10) // 2
+
+# --- Dados das Raças (atributos bônus, visão, deslocamento) ---
+RACAS = {
+    "Anão": {"const": 2, "visao": 18, "deslocamento": 7.5},
+    "Anão da Montanha": {"forca": 2, "visao": 18, "deslocamento": 7.5},
+    "Anão da Colina": {"sab": 1, "visao": 18, "deslocamento": 7.5},
+    "Elfo": {"dex": 2, "visao": 18, "deslocamento": 9},
+    "Alto Elfo": {"inte": 1, "visao": 18, "deslocamento": 9},
+    "Elfo da Floresta": {"sab": 1, "visao": 18, "deslocamento": 9},
+    "Elfo Negro": {"car": 1, "visao": 18, "deslocamento": 9},
+    "Halfling": {"dex": 2, "deslocamento": 9},
+    "Halfling Pés Leves": {"car": 1, "deslocamento": 9},
+    "Halfling Robusto": {"const": 1, "deslocamento": 9},
+    "Humano": {"forca": 1, "dex": 1, "const": 1, "inte": 1, "sab": 1, "car": 1, "deslocamento": 9},
+    "Draconato": {"forca": 2, "car": 1, "deslocamento": 9},
+    "Gnomo": {"inte": 2, "deslocamento": 9},
+    "Gnomo da Floresta": {"dex": 1, "deslocamento": 9},
+    "Gnomo das Rochas": {"const": 1, "deslocamento": 9},
+    "Meio-Elfo": {"car": 2, "visao": 18, "deslocamento": 9},
+    "Meio-Orc": {"forca": 2, "deslocamento": 9},
+    "Tiefling": {"inte": 1, "car": 2, "visao": 18, "deslocamento": 9},
+}
+
+# --- Dados das Classes (dados de vida) ---
+CLASSES = {
+    "BARBARO": {"dado_vida": 12},
+    "BARDO": {"dado_vida": 8},
+    "BRUXO": {"dado_vida": 8},
+    "CLERIGO": {"dado_vida": 8},
+    "DRUIDA": {"dado_vida": 8},
+    "FEITICEIRO": {"dado_vida": 6},
+    "GUERREIRO": {"dado_vida": 10},
+    "LADINO": {"dado_vida": 8},
+    "MAGO": {"dado_vida": 6},
+    "MONGE": {"dado_vida": 8},
+    "PALADINO": {"dado_vida": 10},
+    "PATRULHEIRO": {"dado_vida": 10},
+}
+
+# --- Criação do Personagem ---
+def criar_personagem():
+    personagem = {
+        "nome": input("Nome: "),
+        "idade": input("Idade: "),
+        "peso": input("Peso: "),
+        "jogador": input("Nome do jogador: "),
+        "tendencia": input("Tendência: "),
+        "olhos": input("Olhos: "),
+        "altura": input("Altura: "),
+        "pele": input("Pele: "),
+        "cabelo": input("Cabelo: "),
+    }
+
+    # Atributos básicos
+    atributos = {
+        "forca": int(input("Força: ")),
+        "dex": int(input("Destreza: ")),
+        "const": int(input("Constituição: ")),
+        "inte": int(input("Inteligência: ")),
+        "sab": int(input("Sabedoria: ")),
+        "car": int(input("Carisma: ")),
+    }
+
+    # Raça (aplica bônus)
+    raca = input("Raça: ").strip()
+    if raca in RACAS:
+        for atrib, bonus in RACAS[raca].items():
+            if atrib in atributos:
+                atributos[atrib] += bonus
     else:
-        vida = (random.randint(1, 12) + modcon) * nivel
-elif classe == 'BARDO':
-    if nivel == 1:
-        vida = 8 + modcon
+        print("Raça não reconhecida. Sem bônus aplicados.")
+
+    # Modificadores
+    modificadores = {atrib: calcular_modificador(valor) for atrib, valor in atributos.items()}
+    ca = 10 + modificadores["dex"]
+
+    # Classe e nível
+    classe = input("Classe: ").upper().strip()
+    nivel = int(input("Nível: "))
+    bp = 2 + (nivel - 1) // 4  # Bônus de Proficiência calculado dinamicamente
+
+    # Cálculo de vida
+    if classe in CLASSES:
+        dado_vida = CLASSES[classe]["dado_vida"]
+        if nivel == 1:
+            vida = dado_vida + modificadores["const"]
+        else:
+            vida = (sum(random.randint(1, dado_vida) for _ in range(nivel)) + (modificadores["const"] * nivel)
     else:
-        vida = (random.randint(1, 8) + modcon) * nivel
-elif classe == 'BRUXO':
-    if nivel == 1:
-        vida = 8 + modcon
-    else:
-        vida = (random.randint(1, 8) + modcon) * nivel
-elif classe == 'CLERIGO':
-    if nivel == 1:
-        vida = 8 + modcon
-    else:
-        vida = (random.randint(1, 8) + modcon) * nivel
-elif classe == 'DRUIDA':
-    if nivel == 1:
-        vida = 8 + modcon
-    else:
-        vida = (random.randint(1, 8) + modcon) * nivel
-elif classe == 'FEITICEIRO':
-    if nivel == 1:
-        vida = 6 + modcon
-    else:
-        vida = (random.randint(1, 6) + modcon) * nivel
-elif classe == 'GUERREIRO':
-    if nivel == 1:
-        vida = 10 + modcon
-    else:
-        vida = (random.randint(1, 10) + modcon) * nivel
-elif classe == 'LADINO':
-    if nivel == 1:
-        vida = 8 + modcon
-    else:
-        vida = (random.randint(1, 8) + modcon) * nivel
-elif classe == 'MAGO':
-    if nivel == 1:
-        vida = 6 + modcon
-    else:
-        vida = (random.randint(1, 6) + modcon) * nivel
-elif classe == 'MONGE':
-    if nivel == 1:
-        vida = 8 + modcon
-    else:
-        vida = (random.randint(1, 8) + modcon) * nivel
-elif classe == 'PALADINO':
-    if nivel == 1:
-        vida = 10 + modcon
-    else:
-        vida = (random.randint(1, 10) + modcon) * nivel
-elif classe == 'PATRULHEIRO':
-    if nivel == 1:
-        vida = 10 + modcon
-    else:
-        vida = (random.randint(1, 10) + modcon) * nivel
-''
-print('\nNome: {}            Idade: {}            Peso: {}           Nome do jogador: {}'
-      .format(nome, idade, peso, player))
-print('Tendencia: {}        Olhos: {}            Altura: {}           Pele: {}           Cabelo: {}'
-      .format(tendencia, olhos, altura, pele, cabelo))
-print('Classe: {}           Raça: {}            Nível: {}'.format(classe, raca, nivel))
-print('vida: {}'.format(vida))
+        vida = 0  # Classe não reconhecida
+
+    # Exibir ficha
+    print("\n--- FICHA DO PERSONAGEM ---")
+    print(f"Nome: {personagem['nome']} | Idade: {personagem['idade']} | Peso: {personagem['peso']}")
+    print(f"Jogador: {personagem['jogador']} | Tendência: {personagem['tendencia']}")
+    print(f"Raça: {raca} | Classe: {classe} | Nível: {nivel}")
+    print(f"Olhos: {personagem['olhos']} | Altura: {personagem['altura']}")
+    print(f"Pele: {personagem['pele']} | Cabelo: {personagem['cabelo']}\n")
+
+    print("--- ATRIBUTOS ---")
+    for atrib, valor in atributos.items():
+        print(f"{atrib[:4].upper()} {valor} (Mod: {modificadores[atrib]})")
+
+    print(f"\nCA: {ca} | Vida: {vida} | Bônus de Proficiência: +{bp}")
+
+# --- Execução ---
+if __name__ == "__main__":
+    rolar_dado()  # Opcional: chamar primeiro para rolar dados
+    criar_personagem()
